@@ -1,3 +1,9 @@
-__pyache__
-venv/
+__pycache__
+Include
+Lib
+pyvenv
 .env
+Scripts
+venv/venv
+venv/pyvenv
+
