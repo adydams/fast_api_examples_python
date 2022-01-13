@@ -5,5 +5,5 @@ pyvenv
 .env
 Scripts
 venv/venv
-venv/pyvenv
+venv/app/pyvenv
 
