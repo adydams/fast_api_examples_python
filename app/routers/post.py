@@ -36,7 +36,6 @@ def get_current_user_posts( db: Session = Depends(get_db), response_model = List
     # return posts
     
     posts =  db.query( models.Post).filter(models.Post.owner_id == current_user.id).all()
-    #print(posts)
     return posts
     
 
@@ -68,7 +67,6 @@ def get_post(id:int, db: Session = Depends(get_db), response_model = schema.Post
     # cursor.execute(""" SELECT * FROM posts WHERE ID = %s """, (str(id),))
     # posts =  cursor.fetchone()
     posts = db.query(models.Post).filter(models.Post.owner_id == id).one()
-    print(posts)
     if not posts:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                 detail= f"post with id: {id} not found")

@@ -12,20 +12,15 @@ except ImportError:
 
 
 #when passing the data directly
-#SQLALCHEMY_DATABASE_URL = ('postgresql://postgres:%s@localhost/fastapi' % urlquote('@Beautiful1989'))
-
+#check in .env file
 DATABASE_USERNAME_Val = config('DATABASE_USERNAME')
 DATABASE_HOSTNAME_Val = config('DATABASE_HOSTNAME')
 DATABASE_PASSWORD_Val = config('DATABASE_PASSWORD')
 DATABASE_NAME_Val = config('DATABASE_NAME')
-DATABASE_PORT_Val = config('DATABASE_PORT')
-#print(settings.database_name)
-#print(settings.database_hostname)
+DATABASE_PORT_Val = int(config('DATABASE_PORT'))
 
 #when using .env
 SQLALCHEMY_DATABASE_URL= f'postgresql://{DATABASE_USERNAME_Val}:%s@{DATABASE_HOSTNAME_Val}/{DATABASE_NAME_Val}' % urlquote(DATABASE_PASSWORD_Val)
-#print(SQLALCHEMY_DATABASE_URL_Test)
-print(SQLALCHEMY_DATABASE_URL)
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 

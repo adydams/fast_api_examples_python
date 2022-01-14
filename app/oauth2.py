@@ -10,15 +10,20 @@ from fastapi.security import OAuth2PasswordBearer
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl= 'login')
 
 from sqlalchemy.orm import Session
+from decouple import config
 
+
+SECRET_KEY_Val = config('SECRET_KEY')
+ALGORITHM_Val = config('ALGORITHM')
+ACCESS_TOKEN_EXPIRE_MINUTES_Val = int(config('ACCESS_TOKEN_EXPIRE_MINUTES'))
 # SECRET_KEY
 # algorithm
 # expiration_time
 
-#print(b64encode(token_bytes(32)).decode())
-SECRET_KEY = "0SdnZ30d9BrZe1r3CJMmnOYFkkA5ft/jVG3rt0EYzjs="
-ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 60
+
+SECRET_KEY = SECRET_KEY_Val
+ALGORITHM = ALGORITHM_Val
+ACCESS_TOKEN_EXPIRE_MINUTES = ACCESS_TOKEN_EXPIRE_MINUTES_Val
 
 def create_access_token(data: dict):
     to_encode = data.copy()
@@ -33,10 +38,9 @@ def create_access_token(data: dict):
 
 def verify_access_token(token: str, credential_exception):
     try: 
-        # print("token")
-        # print(token)    
+          
         payload = jwt.decode(token, SECRET_KEY, algorithms= ALGORITHM) 
-        #print(payload) 
+        
         id: str = payload.get("user_id")
         email: str = payload.get("user_email")
 
@@ -56,8 +60,6 @@ def get_current_user(token: str = Depends(oauth2_scheme),  db: Session = Depends
     token = verify_access_token(token, credentials_exception )
     
     user = db.query(models.User).filter(models.User.id == token.id).first()
-    print("get_current_user")
-    print(user.email)
-    print(user.id)
+    
     return user
       
