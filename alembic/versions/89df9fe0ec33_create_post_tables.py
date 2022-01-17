@@ -28,5 +28,5 @@ def upgrade():
     pass
 
 def downgrade():
-    op.drop_table('posts')
+    op.drop_table('post')
     pass
